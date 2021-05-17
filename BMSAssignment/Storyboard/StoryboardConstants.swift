@@ -10,3 +10,4 @@ import Foundation
 let MAIN_STORYBOARD = "Main"
 let MOVIE_LIST_VIEWCONTROLLER = "MovieListViewController"
 let SEARCH_SCREEN_VIEWCONTROLLER = "SearchScreenViewController"
+let MOVIE_DETAIL_VIEWCONTROLLER = "MovieDetailViewController"

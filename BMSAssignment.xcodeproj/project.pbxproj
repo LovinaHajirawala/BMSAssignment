@@ -28,6 +28,9 @@
 		7A9FFA0A26524CD100A37F86 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA0926524CD100A37F86 /* Extension+UIViewController.swift */; };
 		7A9FFA0C26524D2800A37F86 /* StoryboardConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA0B26524D2800A37F86 /* StoryboardConstants.swift */; };
 		7A9FFA0E2652511000A37F86 /* SearchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA0D2652511000A37F86 /* SearchScreenViewController.swift */; };
+		7A9FFA1526525D9800A37F86 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA1426525D9800A37F86 /* MovieDetailViewController.swift */; };
+		7A9FFA172652625100A37F86 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA162652625100A37F86 /* Extension+UIView.swift */; };
+		7A9FFA1926527B7600A37F86 /* Extension+ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		7A9FFA0926524CD100A37F86 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		7A9FFA0B26524D2800A37F86 /* StoryboardConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardConstants.swift; sourceTree = "<group>"; };
 		7A9FFA0D2652511000A37F86 /* SearchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenViewController.swift; sourceTree = "<group>"; };
+		7A9FFA1426525D9800A37F86 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		7A9FFA162652625100A37F86 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+ImageView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,7 @@
 		7A91DE2B264FC5280042D2D1 /* BMSAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				7A9FFA1026525D6700A37F86 /* MovieDetails */,
 				7A91DE3A264FC5290042D2D1 /* Info.plist */,
 				7A91DE5E265152B30042D2D1 /* Plist */,
 				7A91DE4D265103E50042D2D1 /* Utilities */,
@@ -101,6 +108,7 @@
 		7A91DE40264FCE300042D2D1 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				7A9FFA0F26525CE400A37F86 /* MovieView */,
 				7A9FFA0626524C0900A37F86 /* Constants */,
 				7A91DE522651205D0042D2D1 /* Data Model */,
 				7A91DE45264FCF1B0042D2D1 /* Cell */,
@@ -170,6 +178,8 @@
 				7A91DE35264FC5290042D2D1 /* Assets.xcassets */,
 				7A9FF9F72652471E00A37F86 /* Extension+URL.swift */,
 				7A9FFA0926524CD100A37F86 /* Extension+UIViewController.swift */,
+				7A9FFA162652625100A37F86 /* Extension+UIView.swift */,
+				7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -264,6 +274,45 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		7A9FFA0F26525CE400A37F86 /* MovieView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MovieView;
+			sourceTree = "<group>";
+		};
+		7A9FFA1026525D6700A37F86 /* MovieDetails */ = {
+			isa = PBXGroup;
+			children = (
+				7A9FFA1326525D8200A37F86 /* Constants */,
+				7A9FFA1226525D7C00A37F86 /* Model */,
+				7A9FFA1126525D7500A37F86 /* Controller */,
+			);
+			path = MovieDetails;
+			sourceTree = "<group>";
+		};
+		7A9FFA1126525D7500A37F86 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7A9FFA1426525D9800A37F86 /* MovieDetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7A9FFA1226525D7C00A37F86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7A9FFA1326525D8200A37F86 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -336,6 +385,7 @@
 			files = (
 				7A91DE2D264FC5280042D2D1 /* AppDelegate.swift in Sources */,
 				7A91DE5A265148FC0042D2D1 /* NetworkConnectivity.swift in Sources */,
+				7A9FFA172652625100A37F86 /* Extension+UIView.swift in Sources */,
 				7A91DE4F265119FD0042D2D1 /* APIPath.swift in Sources */,
 				7A91DE2F264FC5280042D2D1 /* SceneDelegate.swift in Sources */,
 				7A9FFA0A26524CD100A37F86 /* Extension+UIViewController.swift in Sources */,
@@ -347,7 +397,9 @@
 				7A9FFA0E2652511000A37F86 /* SearchScreenViewController.swift in Sources */,
 				7A91DE47264FCF3A0042D2D1 /* MovieListTableViewCell.swift in Sources */,
 				7A9FFA0526524BDA00A37F86 /* SearchScreenConstants.swift in Sources */,
+				7A9FFA1526525D9800A37F86 /* MovieDetailViewController.swift in Sources */,
 				7A9FFA0C26524D2800A37F86 /* StoryboardConstants.swift in Sources */,
+				7A9FFA1926527B7600A37F86 /* Extension+ImageView.swift in Sources */,
 				7A9FFA0826524C1B00A37F86 /* MovieListConstants.swift in Sources */,
 				7A91DE4A2651034E0042D2D1 /* APIConstants.swift in Sources */,
 				7A91DE42264FCE510042D2D1 /* MovieListViewController.swift in Sources */,

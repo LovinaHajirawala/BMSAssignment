@@ -58,6 +58,7 @@ class NetworkManager {
         let jsonData = try? JSONEncoder().encode(requestModel.httpBody)
         // 6
         let json = String(data: jsonData!, encoding: .utf8)
+        print(json as Any)
         // 7
         httpRequest(urlRequest, T.self) { (response) in
             // 8

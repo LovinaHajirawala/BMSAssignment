@@ -28,6 +28,10 @@ class MovieListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configureUI(model: [MovieListResponse]?){
+        
+    }
+    
     //MARK: IBACTIONS
     @IBAction func bookButtonTapped(_ sender: Any) {
     }

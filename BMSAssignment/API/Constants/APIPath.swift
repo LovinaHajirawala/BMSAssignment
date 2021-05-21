@@ -15,6 +15,7 @@ enum RequestType : String {
 
 enum EndPoint : String {
     case movieList = "movie/now_playing"
+    case movieSynopsis = "movie/"
 }
 
 enum NetworkError: Error {
@@ -39,13 +40,15 @@ enum HTTPHeaderField: String {
 
 struct RequestModel<T: Codable>  {
     let url : EndPoint
-    let typeObj : RequestType = .POST
+    let typeObj : RequestType = .GET
     var querryItems : [URLQueryItem]?
     var httpBody : T?
+    let pathParam : String
     
-    init(url: EndPoint, httpBody: T){
+    init(url: EndPoint, httpBody: T, pathParam: String){
         self.url = url
         self.httpBody = httpBody
+        self.pathParam = pathParam
     }
 }
 

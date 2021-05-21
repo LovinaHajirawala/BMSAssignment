@@ -156,6 +156,10 @@ class NetworkManager {
         // 3
         var url = URL(string: urlString.replacingOccurrences(of: " ", with: "%20"))
         // 4
+        if  !requestData.pathParam.isEmpty {
+            url?.appendPathComponent(requestData.pathParam)
+        }
+       
         url?.appendQueryItem(name: "api_key", value: API_KEY)
         // 5
         urlRequest = URLRequest(url: url!)

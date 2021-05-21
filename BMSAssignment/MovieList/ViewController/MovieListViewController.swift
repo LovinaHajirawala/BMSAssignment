@@ -40,20 +40,25 @@ class MovieListViewController: UIViewController {
     
     func getMovieList(){
         let parameters: [String: String] = [:]
-        let request = RequestModel(url: .movieList, httpBody: parameters)
+        let request = RequestModel(url: .movieList, httpBody: parameters, pathParam: "")
         NetworkManager.request(request, MovieListResponse.self) { result in
             switch result {
             case .success(let list):
                 self.movieList = [list]
             case .failure(let err):
-                self.presentAlertViewController(msg: err.localizedDescription)
+                DispatchQueue.main.async {
+                    self.presentAlertViewController(msg: err.localizedDescription)
+                }
             }
         }
     }
     
-    
-    @objc func bookButtonTapped(){
-        self.presentViewController(vcIdentifier: MOVIE_DETAIL_VIEWCONTROLLER)
+
+    func pushMovieDetailScreenVC(id: Int){
+        let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: MOVIE_DETAIL_VIEWCONTROLLER) as! MovieDetailViewController
+        vc.movieId = id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -82,7 +87,10 @@ extension MovieListViewController : UITableViewDataSource {
         cell.tag = indexPath.row
         cell.showImageFromUrl(path : movieList?.first?.results?[indexPath.section].poster_path ?? "", indexpath: indexPath.section)
         cell.configureUI(model: movieList?.first?.results, indexpath: indexPath.section)
-        cell.bookButton.addTarget(self, action: #selector(bookButtonTapped), for: .allEvents)
+        cell.bookButton.tag = indexPath.row
+        cell.bookButton.whenButtonIsClicked {
+            self.pushMovieDetailScreenVC(id: self.movieList?.first?.results?[indexPath.section].id ?? 0)
+        }
         return cell
     }
 }
@@ -90,7 +98,7 @@ extension MovieListViewController : UITableViewDataSource {
 
 extension MovieListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.presentViewController(vcIdentifier: MOVIE_DETAIL_VIEWCONTROLLER)
+        pushMovieDetailScreenVC(id: movieList?.first?.results?[indexPath.section].id ?? 0)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

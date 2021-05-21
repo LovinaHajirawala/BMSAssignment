@@ -10,7 +10,7 @@ import UIKit
 class MovieListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var movieImageView: UIImageView!
-    @IBOutlet weak var bookButton: UIButton!
+    @IBOutlet weak var bookButton: CustomButton!
     @IBOutlet weak var movieNameLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!

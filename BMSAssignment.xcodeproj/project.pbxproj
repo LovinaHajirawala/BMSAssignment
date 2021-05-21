@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A42454A2658405A0076A8CB /* Extension+Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4245492658405A0076A8CB /* Extension+Button.swift */; };
 		7A91DE2D264FC5280042D2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */; };
 		7A91DE2F264FC5280042D2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */; };
 		7A91DE34264FC5280042D2D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A91DE32264FC5280042D2D1 /* Main.storyboard */; };
@@ -31,9 +32,11 @@
 		7A9FFA1526525D9800A37F86 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA1426525D9800A37F86 /* MovieDetailViewController.swift */; };
 		7A9FFA172652625100A37F86 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA162652625100A37F86 /* Extension+UIView.swift */; };
 		7A9FFA1926527B7600A37F86 /* Extension+ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */; };
+		7A9FFA1B2652E6F300A37F86 /* MovieDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9FFA1A2652E6F300A37F86 /* MovieDetailModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A4245492658405A0076A8CB /* Extension+Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Button.swift"; sourceTree = "<group>"; };
 		7A91DE29264FC5280042D2D1 /* BMSAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMSAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		7A9FFA1426525D9800A37F86 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		7A9FFA162652625100A37F86 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+ImageView.swift"; sourceTree = "<group>"; };
+		7A9FFA1A2652E6F300A37F86 /* MovieDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +184,7 @@
 				7A9FFA0926524CD100A37F86 /* Extension+UIViewController.swift */,
 				7A9FFA162652625100A37F86 /* Extension+UIView.swift */,
 				7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */,
+				7A4245492658405A0076A8CB /* Extension+Button.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -285,7 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				7A9FFA1326525D8200A37F86 /* Constants */,
-				7A9FFA1226525D7C00A37F86 /* Model */,
+				7A9FFA1226525D7C00A37F86 /* Data Model */,
 				7A9FFA1126525D7500A37F86 /* Controller */,
 			);
 			path = MovieDetails;
@@ -299,11 +304,12 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		7A9FFA1226525D7C00A37F86 /* Model */ = {
+		7A9FFA1226525D7C00A37F86 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				7A9FFA1A2652E6F300A37F86 /* MovieDetailModel.swift */,
 			);
-			path = Model;
+			path = "Data Model";
 			sourceTree = "<group>";
 		};
 		7A9FFA1326525D8200A37F86 /* Constants */ = {
@@ -389,9 +395,11 @@
 				7A91DE4F265119FD0042D2D1 /* APIPath.swift in Sources */,
 				7A91DE2F264FC5280042D2D1 /* SceneDelegate.swift in Sources */,
 				7A9FFA0A26524CD100A37F86 /* Extension+UIViewController.swift in Sources */,
+				7A42454A2658405A0076A8CB /* Extension+Button.swift in Sources */,
 				7A91DE5126511B170042D2D1 /* NetworkManager.swift in Sources */,
 				7A9FF9FB26524A4000A37F86 /* SearchDataModel.swift in Sources */,
 				7A91DE5726513EB30042D2D1 /* ErrorParser.swift in Sources */,
+				7A9FFA1B2652E6F300A37F86 /* MovieDetailModel.swift in Sources */,
 				7A9FF9F82652471E00A37F86 /* Extension+URL.swift in Sources */,
 				7A91DE54265121310042D2D1 /* MovieListModel.swift in Sources */,
 				7A9FFA0E2652511000A37F86 /* SearchScreenViewController.swift in Sources */,

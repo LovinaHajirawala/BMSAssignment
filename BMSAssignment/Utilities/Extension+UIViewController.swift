@@ -33,7 +33,9 @@ extension UIViewController {
                 print("destructive")
             }
         }))
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 // end of extension

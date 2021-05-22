@@ -22,6 +22,5 @@ class SearchScreenTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
 // end of class

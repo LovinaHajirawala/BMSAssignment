@@ -81,9 +81,9 @@ class MovieListViewController: UIViewController {
 
 //MARK: SearchBar Delegate
 extension MovieListViewController : UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.presentSearchScreenVC()
-        return true
     }
 }
 

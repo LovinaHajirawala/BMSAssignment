@@ -1,26 +1,31 @@
 {
   "images" : [
     {
+      "filename" : "icons8-movie-ticket-41.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "icons8-movie-ticket-60.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "icons8-movie-ticket-58.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-movie-ticket-87.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-movie-ticket-80.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
@@ -46,6 +51,7 @@
       "size" : "20x20"
     },
     {
+      "filename" : "icons8-movie-ticket-40.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "20x20"
@@ -56,11 +62,13 @@
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-movie-ticket-59.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-movie-ticket-42.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "40x40"

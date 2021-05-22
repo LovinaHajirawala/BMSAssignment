@@ -28,7 +28,10 @@ class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 1 API call
         getMovieList()
+        // 2 To handle empty cells in tableview
+        self.movieListTableView.tableFooterView = UIView()
     }
     
     func showEmptyState(){
@@ -40,9 +43,11 @@ class MovieListViewController: UIViewController {
     }
     
     func getMovieList(){
+        // show loader
         let parameters: [String: String] = [:]
         let request = RequestModel(url: .movieList, httpBody: parameters, pathParam: "")
         NetworkManager.request(request, MovieListResponse.self) { result in
+            // dismiss loader
             switch result {
             case .success(let list):
                 self.movieList = [list]
@@ -54,7 +59,7 @@ class MovieListViewController: UIViewController {
         }
     }
     
-
+    // navigation
     func pushMovieDetailScreenVC(id: Int){
         let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: MOVIE_DETAIL_VIEWCONTROLLER) as! MovieDetailViewController
@@ -62,18 +67,28 @@ class MovieListViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //
+    func presentSearchScreenVC(){
+        let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: SEARCH_SCREEN_VIEWCONTROLLER) as! SearchScreenViewController
+        let movieName = self.movieList?.first?.results?.compactMap{$0.original_title}
+        vc.movieNameArray =  movieName ?? [""]
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }
 // end of class
 
+//MARK: SearchBar Delegate
 extension MovieListViewController : UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        self.presentViewController(vcIdentifier: SEARCH_SCREEN_VIEWCONTROLLER)
+        self.presentSearchScreenVC()
         return true
     }
 }
 
 // end of UISearchBarDelegate extension
-
+//MARK: UITableViewDataSource
 extension MovieListViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return movieList?.first?.results?.count ?? 0
@@ -97,6 +112,7 @@ extension MovieListViewController : UITableViewDataSource {
 }
 // end of UITableViewDataSource
 
+//MARK: UITableViewDelegate
 extension MovieListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         pushMovieDetailScreenVC(id: movieList?.first?.results?[indexPath.section].id ?? 0)

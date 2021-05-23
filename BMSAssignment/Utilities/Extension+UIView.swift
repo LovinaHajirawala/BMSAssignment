@@ -10,9 +10,9 @@ import UIKit
 
 extension UIView {
     
-    func addBorderLayerAndCornerRadius(){
+    func addBorderLayerAndCornerRadius(color: UIColor){
         self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = color.cgColor
         self.layer.cornerRadius = 10
     }
 }

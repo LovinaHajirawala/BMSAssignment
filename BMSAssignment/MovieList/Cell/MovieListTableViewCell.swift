@@ -30,9 +30,9 @@ class MovieListTableViewCell: UITableViewCell {
     
     func configureUI(model: [Results]?, indexpath: Int){
         // 1 UI set up
-        self.addBorderLayerAndCornerRadius()
-        self.movieImageView?.addBorderLayerAndCornerRadius()
-        self.bookButton.addBorderLayerAndCornerRadius()
+        self.addBorderLayerAndCornerRadius(color: .black)
+        self.movieImageView?.addBorderLayerAndCornerRadius(color: .black)
+        self.bookButton.addBorderLayerAndCornerRadius(color: .red)
         // 2 data binding
         self.movieNameLabel.text = model?[indexpath].original_title
         self.releaseDateLabel.text = "Release Date: \(model?[indexpath].release_date ?? "")"
@@ -42,15 +42,6 @@ class MovieListTableViewCell: UITableViewCell {
     
     func showImageFromUrl(path : String, indexpath: Int){
         self.movieImageView.layer.masksToBounds = true
-//        DispatchQueue.main.async {
-//            if(self.tag == indexpath) {
-//                if !path.isEmpty{
-//                    self.movieImageView.downloaded(from: path)
-//                } else {
-//                    self.movieImageView.image = #imageLiteral(resourceName: "placeholder.jpg")
-//                }
-//            }
-//        }
         let imageString = IMAGE_BASE_URL + path
         let imageUrl = URL(string: imageString.replacingOccurrences(of: " ", with: "%20"))
         guard let url = imageUrl else { return }

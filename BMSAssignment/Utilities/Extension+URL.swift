@@ -12,7 +12,6 @@ extension URL {
 
         guard var urlComponents = URLComponents(string: absoluteString) else { return }
        
-
         //1 Create array of existing query items
         var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
 

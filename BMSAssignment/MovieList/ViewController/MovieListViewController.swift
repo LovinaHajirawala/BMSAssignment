@@ -77,6 +77,7 @@ class MovieListViewController: UIViewController {
         let vc = storyboard.instantiateViewController(identifier: SEARCH_SCREEN_VIEWCONTROLLER) as! SearchScreenViewController
         let movieName = self.movieList?.first?.results?.compactMap{$0.original_title}
         vc.movieNameArray =  movieName ?? [""]
+//        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -89,6 +90,7 @@ extension MovieListViewController : UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.presentSearchScreenVC()
     }
+    
 }
 
 // end of UISearchBarDelegate extension

@@ -27,7 +27,9 @@ class SearchScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCoreDataObjects()
+        
     }
+    
     
     func fetchCoreDataObjects(){
        // fetch movies from core data to display in the tableview
@@ -111,12 +113,14 @@ extension SearchScreenViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SEARCH_SCREEN_CELL_IDENTIFIER, for: indexPath) as! SearchScreenTableViewCell
-        cell.addBorderLayerAndCornerRadius()
+        cell.addBorderLayerAndCornerRadius(color: .black)
         if  isSearching || movies.isEmpty {
             cell.configureUI(movie: filteredArray[indexPath.section], searchText: self.searchText)
+            cell.isUserInteractionEnabled = true
         } else {
             let name = self.movies[indexPath.section]
             cell.configureUI(movie:  name.movieName?.first ?? "", searchText: self.searchText)
+            cell.isUserInteractionEnabled = false
         }
       
         return cell
@@ -136,7 +140,17 @@ extension SearchScreenViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedMovies.append(filteredArray[indexPath.section])
+        // hide search cancel button
+        searchBarTextField.showsCancelButton = false
+        //
+        let movieArray = movies.compactMap{$0.movieName}
+        let selectedMovieArray = movieArray.compactMap{$0.contains(filteredArray[indexPath.section])}
+        if selectedMovieArray.contains(true) {
+            self.presentAlertViewController(msg: ALREADY_CACHED)
+        } else {
+            selectedMovies.append(filteredArray[indexPath.section])
+        }
+       
         // create a movie object
         let cachedMovie = Movie(context: self.context)
         cachedMovie.movieName = selectedMovies
@@ -151,13 +165,24 @@ extension SearchScreenViewController : UITableViewDelegate {
 }
 
 extension SearchScreenViewController : UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        isSearching = true
-        searchBar.showsCancelButton = true
-        return true
+//    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+//        isSearching = true
+//        searchBar.showsCancelButton = true
+//        searchStatusLabel.text = ""
+//        return true
+//    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+       
     }
     
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        isSearching = true
+        searchBar.showsCancelButton = true
+        searchStatusLabel.text = ""
+        
         filteredArray = searchText.isEmpty ? movieNameArray : movieNameArray.filter({(movie: String) -> Bool in
             let movieSubparts = movie.components(separatedBy: " ")
             let movieFirstChar = movieSubparts.compactMap{$0.starts(with: searchText)}
@@ -177,12 +202,12 @@ extension SearchScreenViewController : UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        isSearching = false
+        isSearching = true
+        searchStatusLabel.text = ""
+        filteredArray = movieNameArray
         self.searchTableView.reloadData()
     }
 }
-
-
 
 
 

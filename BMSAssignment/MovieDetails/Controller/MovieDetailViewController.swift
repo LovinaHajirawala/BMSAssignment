@@ -26,6 +26,11 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getMovieSynopsis()
+        // TODO: On click on homepage take to SFSafariVC
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bookButton.addBorderLayerAndCornerRadius(color: .clear)
     }
     
     //MARK:- API Call
@@ -54,13 +59,12 @@ class MovieDetailViewController: UIViewController {
     //MARK: Set UI
     func configureUI(){
         movieImageView.sd_setImage(with: getImageUrl(path: self.movieSynopsis?.backdrop_path ?? ""), placeholderImage: UIImage(named: "placeholder"))
-        movieName.text = self.movieSynopsis?.original_title
-        homepageLabel.text = self.movieSynopsis?.homepage
-        languageLabel.text = self.movieSynopsis?.original_language
-        taglineLabel.text = self.movieSynopsis?.tagline
-        overviewLabel.text = self.movieSynopsis?.overview
-        releaseDateStatusLabel.text = self.movieSynopsis?.release_date
-        bookButton.addBorderLayerAndCornerRadius()
+        movieName.text = "Movie Name: \(self.movieSynopsis?.original_title ?? "")"
+        homepageLabel.text = "HomePage: \(self.movieSynopsis?.homepage ?? "")"
+        languageLabel.text = "Language: \(self.movieSynopsis?.original_language ?? "")"
+        taglineLabel.text = "Tagline: \(self.movieSynopsis?.tagline ?? "")"
+        overviewLabel.text = "Overview: \(self.movieSynopsis?.overview ?? "")"
+        releaseDateStatusLabel.text = "Release Date: \(self.movieSynopsis?.release_date ?? "")"
     }
     
     func getImageUrl(path: String) -> URL {

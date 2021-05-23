@@ -11,7 +11,6 @@ import Foundation
 class NetworkManager {
     
     static func requestData<T:Codable, U: Codable>(_ requestModel:RequestModel<U>,
-                                                   _ modelType: T.Type,
                                                    completion: @escaping (Result<T,APIError>) -> Void) {
         // 1
         let isConnected = NetworkConnectivity.isConnectedToNetwork
@@ -41,7 +40,6 @@ class NetworkManager {
     }
     
     static func request<T:Codable, U: Codable>(_ requestModel:RequestModel<U>,
-                                               _ modelType: T.Type,
                                                completion: @escaping (Result<T,APIError>) -> Void) {
         // 1
         let isConnected = NetworkConnectivity.isConnectedToNetwork
@@ -66,6 +64,7 @@ class NetworkManager {
             
             case .success(let wrapper):
                 // 9
+                
                 completion(.success(wrapper))
             case .failure(let error):
                 // 10

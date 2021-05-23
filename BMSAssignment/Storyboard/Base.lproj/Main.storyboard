@@ -153,7 +153,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-lf-pjq">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Movies" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-lf-pjq">
                                 <rect key="frame" x="20" y="74" width="374" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>

@@ -9,102 +9,63 @@ import UIKit
 import CoreData
 
 class SearchScreenViewController: UIViewController {
-
+    
     @IBOutlet weak var searchStatusLabel: UILabel!
     @IBOutlet weak var searchBarTextField: UISearchBar!
     @IBOutlet weak var searchTableView: UITableView!
     
-    // MARK: Variables declearations
+    // MARK: Variables declarations
     var movieNameArray = [String]()
     var filteredArray = [String]()
     var searchText = String()
     var selectedMovies = [String]()
-    var movies = [Movie]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var isSearching = Bool()
-   
+    var viewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCoreDataObjects()
-        
+        // 1 fetch core data objects
+        fetchCoreDataObjectsFromModel()
     }
-    
-    
-    func fetchCoreDataObjects(){
-       // fetch movies from core data to display in the tableview
-        do {
-            self.movies =  try context.fetch(Movie.fetchRequest())
-            // Its an UI operation. dispatch to avoid performance impact
-            DispatchQueue.main.async {
-                self.searchStatusLabel.text = self.movies.isEmpty ? "" : RECENTLY_SEARCHED
-                self.searchTableView.reloadData()
-            }
-
-        } catch {
-
-        }
-    }
-    
-    func cacheMoviesToCoreData(movieName: String){
-        let movie = Movie(context: context)
-        movie.movieName = selectedMovies
-        do {
-            try context.save()
-        } catch {
-            // error
-        }
-    }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         self.searchBarTextField.tintColor = .red
     }
     
-//    func loadCoreData(){
-//        context = appDelegate.persistentContainer.viewContext
-//        let entity = NSEntityDescription.entity(forEntityName: ENTITY_NAME, in: context)
-//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-//        saveData(UserDBObj:newUser)
-//    }
-//
-//    func saveData(UserDBObj:NSManagedObject)
-//        {
-//            UserDBObj.setValue(selectedMovies, forKey: ATTRIBUTE_NAME)
-//
-//            print("Storing Data..")
-//            do {
-//                try context.save()
-//            } catch {
-//                print("Storing data Failed")
-//            }
-//
-//            fetchData()
-//        }
-//
-//    func fetchData()
-//        {
-//            print("Fetching Data..")
-//            let request = NSFetchRequest<NSFetchRequestResult>(entityName: ENTITY_NAME)
-//            request.returnsObjectsAsFaults = false
-//            do {
-//                let result = try context.fetch(request)
-//                for data in result as! [NSManagedObject] {
-//                    let userName = data.value(forKey: ATTRIBUTE_NAME) as! String
-//                    print("User Name is : \(userName)")
-//                }
-//            } catch {
-//                print("Fetching data Failed")
-//            }
-//        }
+    func fetchCoreDataObjectsFromModel(){
+        self.viewModel.fetchCoreDataObjects { success in
+            if success {
+                // do block success
+                self.searchStatusLabel.text = self.viewModel.movies.isEmpty ? "" : RECENTLY_SEARCHED
+                self.searchTableView.reloadData()
+            } else {
+                // catch block
+                self.presentAlertViewController(msg: COMMON_ERROR_MESSAGE)
+            }
+        }
+    }
+    
+    func cacheMoviesToCoreDataFromModel(){
+        self.viewModel.cacheMoviesToCoreData{ success in
+            if success{
+                // do block success
+                self.presentAlertViewController(msg: CACHED)
+            } else {
+                // catch block
+            }
+        }
+    }
 }
 // end of class
 
-
+//MARK: UITableViewDataSource extension
 extension SearchScreenViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return  isSearching ? filteredArray.count : movies.count
+        if viewModel.movies.count == 0 && filteredArray.count == 0{
+            return movieNameArray.count
+        }
+        return  isSearching ? filteredArray.count : viewModel.movies.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,20 +75,27 @@ extension SearchScreenViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SEARCH_SCREEN_CELL_IDENTIFIER, for: indexPath) as! SearchScreenTableViewCell
         cell.addBorderLayerAndCornerRadius(color: .black)
-        if  isSearching || movies.isEmpty {
+        if  isSearching {
             cell.configureUI(movie: filteredArray[indexPath.section], searchText: self.searchText)
             cell.isUserInteractionEnabled = true
-        } else {
-            let name = self.movies[indexPath.section]
-            cell.configureUI(movie:  name.movieName?.first ?? "", searchText: self.searchText)
+        } else if viewModel.movies.count == 0 && filteredArray.count == 0 {
+            cell.configureUI(movie: movieNameArray[indexPath.section], searchText: self.searchText)
+            cell.isUserInteractionEnabled = true
+        }
+        else {
+            // from core data
+            let name = viewModel.movies[indexPath.section]
+            cell.configureUI(movie:  name.movieName?[indexPath.section] ?? "", searchText: self.searchText)
             cell.isUserInteractionEnabled = false
         }
-      
+        
         return cell
     }
-
+    
 }
+//end of UITableViewDataSource extension
 
+//MARK: UITableViewDelegate extension
 extension SearchScreenViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -140,74 +108,73 @@ extension SearchScreenViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // hide search cancel button
+        //1 hide search cancel button
         searchBarTextField.showsCancelButton = false
-        //
-        let movieArray = movies.compactMap{$0.movieName}
+        //2 filter data
+        let movieArray = viewModel.movies.compactMap{$0.movieName}
         let selectedMovieArray = movieArray.compactMap{$0.contains(filteredArray[indexPath.section])}
+        // 3 check if already exist
         if selectedMovieArray.contains(true) {
             self.presentAlertViewController(msg: ALREADY_CACHED)
-        } else {
+            // 4
+            return
+        } else if !filteredArray.isEmpty{
             selectedMovies.append(filteredArray[indexPath.section])
-        }
-       
-        // create a movie object
-        let cachedMovie = Movie(context: self.context)
-        cachedMovie.movieName = selectedMovies
-        // save to core data
-        if selectedMovies.count <= 5 {
-            cacheMoviesToCoreData(movieName: filteredArray[indexPath.section])
-            self.presentAlertViewController(msg: CACHED)
         } else {
-            self.presentAlertViewController(msg: CACHING_ERROR)
+            selectedMovies.append(movieNameArray[indexPath.section])
+        }
+       // 5
+        self.viewModel.validateMovie(selectedMovies: selectedMovies) { status, msg in
+            if status {
+                self.cacheMoviesToCoreDataFromModel()
+            }
+            self.presentAlertViewController(msg: msg)
         }
     }
 }
+// end of UITableViewDelegate extension
 
+//MARK: UISearchBarDelegate extension
 extension SearchScreenViewController : UISearchBarDelegate {
-//    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-//        isSearching = true
-//        searchBar.showsCancelButton = true
-//        searchStatusLabel.text = ""
-//        return true
-//    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-       
-    }
-    
-    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // 1 UI Modification
         isSearching = true
         searchBar.showsCancelButton = true
         searchStatusLabel.text = ""
-        
+        // 2 data filteration
         filteredArray = searchText.isEmpty ? movieNameArray : movieNameArray.filter({(movie: String) -> Bool in
+            // 3
             let movieSubparts = movie.components(separatedBy: " ")
             let movieFirstChar = movieSubparts.compactMap{$0.starts(with: searchText)}
             let filteredMovie =  movieFirstChar.filter{$0 == true}
             
-            // If dataItem matches the searchText, return true to include it
+            //4 If dataItem matches the searchText, return true to include it
             if !filteredMovie.isEmpty{
                 return movie.range(of: searchText, options: .caseInsensitive) != nil
             }
-           
+            // 5
             return false
-            })
+        })
+        // 6
         self.searchText = searchText
         print(filteredArray)
+        // 7 reload
         self.searchTableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // 1 UI Modification
         searchBar.showsCancelButton = false
         isSearching = true
         searchStatusLabel.text = ""
+        // 2 assign original list
         filteredArray = movieNameArray
+        // 3 reload
         self.searchTableView.reloadData()
     }
 }
+// end of UISearchBarDelegate extension
 
 
 

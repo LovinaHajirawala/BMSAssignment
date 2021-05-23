@@ -10,7 +10,7 @@ import Foundation
 struct MovieSynopsisResponse : Codable {
     let adult : Bool?
     let backdrop_path : String?
-    let belongs_to_collection : String?
+    let belongs_to_collection : Belongs_to_collection?
     let budget : Int?
     let genres : [Genres]?
     let homepage : String?
@@ -67,7 +67,7 @@ struct MovieSynopsisResponse : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adult = try values.decodeIfPresent(Bool.self, forKey: .adult)
         backdrop_path = try values.decodeIfPresent(String.self, forKey: .backdrop_path)
-        belongs_to_collection = try values.decodeIfPresent(String.self, forKey: .belongs_to_collection)
+        belongs_to_collection = try values.decodeIfPresent(Belongs_to_collection.self, forKey: .belongs_to_collection)
         budget = try values.decodeIfPresent(Int.self, forKey: .budget)
         genres = try values.decodeIfPresent([Genres].self, forKey: .genres)
         homepage = try values.decodeIfPresent(String.self, forKey: .homepage)
@@ -174,3 +174,28 @@ struct Spoken_languages : Codable {
     }
     
 }
+
+struct Belongs_to_collection : Codable {
+    let id : Int?
+    let name : String?
+    let poster_path : String?
+    let backdrop_path : String?
+
+    enum CodingKeys: String, CodingKey {
+
+        case id = "id"
+        case name = "name"
+        case poster_path = "poster_path"
+        case backdrop_path = "backdrop_path"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decodeIfPresent(Int.self, forKey: .id)
+        name = try values.decodeIfPresent(String.self, forKey: .name)
+        poster_path = try values.decodeIfPresent(String.self, forKey: .poster_path)
+        backdrop_path = try values.decodeIfPresent(String.self, forKey: .backdrop_path)
+    }
+
+}
+

@@ -20,15 +20,16 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
     
-    // MARK: Variables declearations
+    // MARK: Variables declarations
     var movieId: Int!
-    var movieSynopsis : MovieSynopsisResponse?
+    var viewModel = MovieDetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // 1 API Call
-        getMovieSynopsis()
-        // TODO: On click on homepage take to SFSafariVC
+        self.viewModel.movieId = movieId
+        getMovieSynopsisFromModel()
+        // TODO: On click on homepage take to SFSafariVC/WKWebkit
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,52 +37,36 @@ class MovieDetailViewController: UIViewController {
     }
     
     //MARK:- API Call
-    func getMovieSynopsis(){
+    func getMovieSynopsisFromModel(){
         // TODO: start loader
-        // 1 Set Parameters
-        let parameters: [String: Int] = [:]
-        // 2 Set Request
-        let request = RequestModel(url: .movieSynopsis, httpBody: parameters, pathParam: "\(movieId ?? 0)")
-        // 3  API Call
-        NetworkManager.request(request, MovieSynopsisResponse.self) { result in
-            // TODO: dismiss loader
-            switch result {
-            case .success(let list):
-                //4 assign data to datasource
-                self.movieSynopsis = list
-                // 5 set UI
+        // call viewmodel
+        self.viewModel.getMovieSynopsis { status, msg in
+            // dismiss loader
+            if status {
                 DispatchQueue.main.async {
                     self.configureUI()
                 }
-            case .failure(let err):
-                // 6 Error Handling
-                self.presentAlertViewController(msg: err.localizedDescription)
+            } else {
+                self.presentAlertViewController(msg: msg)
             }
         }
     }
     
-    static func getPathParameter(movieId: Int) -> EndPoint{
-        return .movieList
-    }
+   
     
     //MARK: Set UI
     func configureUI(){
-        movieImageView.sd_setImage(with: getImageUrl(path: self.movieSynopsis?.backdrop_path ?? ""), placeholderImage: UIImage(named: "placeholder"))
-        movieName.text = "Movie Name: \(self.movieSynopsis?.original_title ?? "")"
-        homepageLabel.text = "HomePage: \(self.movieSynopsis?.homepage ?? "")"
-        languageLabel.text = "Language: \(self.movieSynopsis?.original_language ?? "")"
-        taglineLabel.text = "Tagline: \(self.movieSynopsis?.tagline ?? "")"
-        overviewLabel.text = "Overview: \(self.movieSynopsis?.overview ?? "")"
-        releaseDateStatusLabel.text = "Release Date: \(self.movieSynopsis?.release_date ?? "")"
+        let path = self.viewModel.getImageUrl(path: self.viewModel.movieSynopsis?.backdrop_path ?? "")
+        movieImageView.sd_setImage(with: path, placeholderImage: UIImage(named: "placeholder"))
+        movieName.text = "Movie Name: \(self.viewModel.movieSynopsis?.original_title ?? "")"
+        homepageLabel.text = "HomePage: \(self.viewModel.movieSynopsis?.homepage ?? "")"
+        languageLabel.text = "Language: \(self.viewModel.movieSynopsis?.original_language ?? "")"
+        taglineLabel.text = "Tagline: \(self.viewModel.movieSynopsis?.tagline ?? "")"
+        overviewLabel.text = "Overview: \(self.viewModel.movieSynopsis?.overview ?? "")"
+        releaseDateStatusLabel.text = "Release Date: \(self.viewModel.movieSynopsis?.release_date ?? "")"
     }
     
-    func getImageUrl(path: String) -> URL {
-        let url = NSURL()
-        let imageString = IMAGE_BASE_URL + path
-        guard let imageUrl = URL(string: imageString.replacingOccurrences(of: " ", with: "%20")) else { return url as URL }
-        return imageUrl
-    }
-    
+    //MARK: IBActions
     @IBAction func backButtonClicked(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

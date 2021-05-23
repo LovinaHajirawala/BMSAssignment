@@ -71,7 +71,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     @IBAction func backButtonClicked(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func bookButtonClicked(_ sender: Any) {

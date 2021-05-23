@@ -34,6 +34,10 @@ class MovieListViewController: UIViewController {
         self.movieListTableView.tableFooterView = UIView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.searchBarTextField.tintColor = .clear
+    }
+    
     func showEmptyState(){
         
     }

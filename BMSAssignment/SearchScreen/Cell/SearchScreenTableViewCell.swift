@@ -22,5 +22,9 @@ class SearchScreenTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func configureUI(movie: String, searchText: String){
+        self.movieNameLabel.attributedText = movie.highlightText(searchText, with: .red)
+    }
 }
 // end of class

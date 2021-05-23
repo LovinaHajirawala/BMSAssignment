@@ -13,9 +13,15 @@ class SearchScreenViewController: UIViewController {
     @IBOutlet weak var searchBarTextField: UISearchBar!
     @IBOutlet weak var searchTableView: UITableView!
     var movieNameArray = [String]()
+    var filteredArray = [String]()
+    var searchText = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.searchBarTextField.tintColor = .red
     }
     
 }
@@ -24,7 +30,7 @@ class SearchScreenViewController: UIViewController {
 
 extension SearchScreenViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return movieNameArray.count
+        return filteredArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,10 +40,13 @@ extension SearchScreenViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SEARCH_SCREEN_CELL_IDENTIFIER, for: indexPath) as! SearchScreenTableViewCell
         cell.addBorderLayerAndCornerRadius()
-        cell.movieNameLabel.text = movieNameArray[indexPath.section]
+        cell.configureUI(movie: filteredArray[indexPath.section], searchText: self.searchText)
         return cell
     }
-    
+
+}
+
+extension SearchScreenViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
@@ -49,6 +58,22 @@ extension SearchScreenViewController : UITableViewDataSource {
     }
 }
 
-extension SearchScreenViewController : UITableViewDelegate {
-    
+extension SearchScreenViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredArray = searchText.isEmpty ? movieNameArray : movieNameArray.filter({(movie: String) -> Bool in
+            let movieSubparts = movie.components(separatedBy: " ")
+            let movieFirstChar = movieSubparts.compactMap{$0.starts(with: searchText)}
+            let filteredMovie =  movieFirstChar.filter{$0 == true}
+            
+            // If dataItem matches the searchText, return true to include it
+            if !filteredMovie.isEmpty{
+                return movie.range(of: searchText, options: .caseInsensitive) != nil
+            }
+           
+            return false
+            })
+        self.searchText = searchText
+        print(filteredArray)
+        self.searchTableView.reloadData()
+    }
 }

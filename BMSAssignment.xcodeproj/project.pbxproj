@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7A42454A2658405A0076A8CB /* Extension+Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4245492658405A0076A8CB /* Extension+Button.swift */; };
 		7A42454D265843870076A8CB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7A42454C265843870076A8CB /* SDWebImage */; };
+		7A424550265A29F20076A8CB /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A42454F265A29F20076A8CB /* Extension+String.swift */; };
 		7A91DE2D264FC5280042D2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */; };
 		7A91DE2F264FC5280042D2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */; };
 		7A91DE34264FC5280042D2D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A91DE32264FC5280042D2D1 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		7A4245492658405A0076A8CB /* Extension+Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Button.swift"; sourceTree = "<group>"; };
+		7A42454F265A29F20076A8CB /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		7A91DE29264FC5280042D2D1 /* BMSAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMSAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A42454E265A11A80076A8CB /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		7A91DE20264FC5280042D2D1 = {
 			isa = PBXGroup;
 			children = (
@@ -98,13 +107,13 @@
 		7A91DE2B264FC5280042D2D1 /* BMSAssignment */ = {
 			isa = PBXGroup;
 			children = (
-				7A9FFA1026525D6700A37F86 /* MovieDetails */,
 				7A91DE3A264FC5290042D2D1 /* Info.plist */,
 				7A91DE5E265152B30042D2D1 /* Plist */,
 				7A91DE4D265103E50042D2D1 /* Utilities */,
 				7A91DE4C265103C10042D2D1 /* ApplicationDelegate */,
 				7A91DE4B265103AB0042D2D1 /* Storyboard */,
 				7A91DE43264FCE6C0042D2D1 /* API */,
+				7A9FFA1026525D6700A37F86 /* MovieDetails */,
 				7A9FF9F926524A2A00A37F86 /* SearchScreen */,
 				7A91DE40264FCE300042D2D1 /* MovieList */,
 			);
@@ -187,6 +196,7 @@
 				7A9FFA162652625100A37F86 /* Extension+UIView.swift */,
 				7A9FFA1826527B7600A37F86 /* Extension+ImageView.swift */,
 				7A4245492658405A0076A8CB /* Extension+Button.swift */,
+				7A42454F265A29F20076A8CB /* Extension+String.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -291,6 +301,7 @@
 		7A9FFA1026525D6700A37F86 /* MovieDetails */ = {
 			isa = PBXGroup;
 			children = (
+				7A42454E265A11A80076A8CB /* View Model */,
 				7A9FFA1326525D8200A37F86 /* Constants */,
 				7A9FFA1226525D7C00A37F86 /* Data Model */,
 				7A9FFA1126525D7500A37F86 /* Controller */,
@@ -405,6 +416,7 @@
 				7A9FFA0A26524CD100A37F86 /* Extension+UIViewController.swift in Sources */,
 				7A42454A2658405A0076A8CB /* Extension+Button.swift in Sources */,
 				7A91DE5126511B170042D2D1 /* NetworkManager.swift in Sources */,
+				7A424550265A29F20076A8CB /* Extension+String.swift in Sources */,
 				7A9FF9FB26524A4000A37F86 /* SearchDataModel.swift in Sources */,
 				7A91DE5726513EB30042D2D1 /* ErrorParser.swift in Sources */,
 				7A9FFA1B2652E6F300A37F86 /* MovieDetailModel.swift in Sources */,

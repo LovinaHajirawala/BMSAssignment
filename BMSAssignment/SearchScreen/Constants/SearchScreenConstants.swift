@@ -8,3 +8,5 @@
 import Foundation
 
 let SEARCH_SCREEN_CELL_IDENTIFIER = "SearchScreenTableViewCell"
+let  RECENTLY_SEARCHED = "Recently Searched Movies"
+let CACHED = "Cached"

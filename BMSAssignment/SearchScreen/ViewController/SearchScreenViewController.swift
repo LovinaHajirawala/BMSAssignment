@@ -15,9 +15,11 @@ class SearchScreenViewController: UIViewController {
     var movieNameArray = [String]()
     var filteredArray = [String]()
     var searchText = String()
+    var selectedMovies = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchStatusLabel.text = selectedMovies.isEmpty ? "" : RECENTLY_SEARCHED
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +57,11 @@ extension SearchScreenViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedMovies.append(filteredArray[indexPath.section])
+        self.presentAlertViewController(msg: CACHED)
     }
 }
 

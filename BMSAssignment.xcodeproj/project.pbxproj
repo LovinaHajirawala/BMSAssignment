@@ -10,6 +10,7 @@
 		7A42454A2658405A0076A8CB /* Extension+Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4245492658405A0076A8CB /* Extension+Button.swift */; };
 		7A42454D265843870076A8CB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7A42454C265843870076A8CB /* SDWebImage */; };
 		7A424550265A29F20076A8CB /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A42454F265A29F20076A8CB /* Extension+String.swift */; };
+		7A424553265A55410076A8CB /* SearchModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A424551265A55410076A8CB /* SearchModel.xcdatamodeld */; };
 		7A91DE2D264FC5280042D2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */; };
 		7A91DE2F264FC5280042D2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */; };
 		7A91DE34264FC5280042D2D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A91DE32264FC5280042D2D1 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		7A4245492658405A0076A8CB /* Extension+Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Button.swift"; sourceTree = "<group>"; };
 		7A42454F265A29F20076A8CB /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
+		7A424552265A55410076A8CB /* SearchModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SearchModel.xcdatamodel; sourceTree = "<group>"; };
 		7A91DE29264FC5280042D2D1 /* BMSAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMSAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A91DE2C264FC5280042D2D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A91DE2E264FC5280042D2D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		7A91DE20264FC5280042D2D1 = {
 			isa = PBXGroup;
 			children = (
+				7A424551265A55410076A8CB /* SearchModel.xcdatamodeld */,
 				7A91DE2B264FC5280042D2D1 /* BMSAssignment */,
 				7A91DE2A264FC5280042D2D1 /* Products */,
 			);
@@ -418,6 +421,7 @@
 				7A91DE5126511B170042D2D1 /* NetworkManager.swift in Sources */,
 				7A424550265A29F20076A8CB /* Extension+String.swift in Sources */,
 				7A9FF9FB26524A4000A37F86 /* SearchDataModel.swift in Sources */,
+				7A424553265A55410076A8CB /* SearchModel.xcdatamodeld in Sources */,
 				7A91DE5726513EB30042D2D1 /* ErrorParser.swift in Sources */,
 				7A9FFA1B2652E6F300A37F86 /* MovieDetailModel.swift in Sources */,
 				7A9FF9F82652471E00A37F86 /* Extension+URL.swift in Sources */,
@@ -650,6 +654,19 @@
 			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		7A424551265A55410076A8CB /* SearchModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7A424552265A55410076A8CB /* SearchModel.xcdatamodel */,
+			);
+			currentVersion = 7A424552265A55410076A8CB /* SearchModel.xcdatamodel */;
+			path = SearchModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7A91DE21264FC5280042D2D1 /* Project object */;
 }

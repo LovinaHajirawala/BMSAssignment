@@ -6,33 +6,103 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchScreenViewController: UIViewController {
 
     @IBOutlet weak var searchStatusLabel: UILabel!
     @IBOutlet weak var searchBarTextField: UISearchBar!
     @IBOutlet weak var searchTableView: UITableView!
+    
+    // MARK: Variables declearations
     var movieNameArray = [String]()
     var filteredArray = [String]()
     var searchText = String()
     var selectedMovies = [String]()
+    var movies = [Movie]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var isSearching = Bool()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchStatusLabel.text = selectedMovies.isEmpty ? "" : RECENTLY_SEARCHED
+        fetchCoreDataObjects()
     }
+    
+    func fetchCoreDataObjects(){
+       // fetch movies from core data to display in the tableview
+        do {
+            self.movies =  try context.fetch(Movie.fetchRequest())
+            // Its an UI operation. dispatch to avoid performance impact
+            DispatchQueue.main.async {
+                self.searchStatusLabel.text = self.movies.isEmpty ? "" : RECENTLY_SEARCHED
+                self.searchTableView.reloadData()
+            }
+
+        } catch {
+
+        }
+    }
+    
+    func cacheMoviesToCoreData(movieName: String){
+        let movie = Movie(context: context)
+        movie.movieName = selectedMovies
+        do {
+            try context.save()
+        } catch {
+            // error
+        }
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         self.searchBarTextField.tintColor = .red
     }
     
+//    func loadCoreData(){
+//        context = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: ENTITY_NAME, in: context)
+//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+//        saveData(UserDBObj:newUser)
+//    }
+//
+//    func saveData(UserDBObj:NSManagedObject)
+//        {
+//            UserDBObj.setValue(selectedMovies, forKey: ATTRIBUTE_NAME)
+//
+//            print("Storing Data..")
+//            do {
+//                try context.save()
+//            } catch {
+//                print("Storing data Failed")
+//            }
+//
+//            fetchData()
+//        }
+//
+//    func fetchData()
+//        {
+//            print("Fetching Data..")
+//            let request = NSFetchRequest<NSFetchRequestResult>(entityName: ENTITY_NAME)
+//            request.returnsObjectsAsFaults = false
+//            do {
+//                let result = try context.fetch(request)
+//                for data in result as! [NSManagedObject] {
+//                    let userName = data.value(forKey: ATTRIBUTE_NAME) as! String
+//                    print("User Name is : \(userName)")
+//                }
+//            } catch {
+//                print("Fetching data Failed")
+//            }
+//        }
 }
 // end of class
 
 
 extension SearchScreenViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredArray.count
+        return  isSearching ? filteredArray.count : movies.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,7 +112,13 @@ extension SearchScreenViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SEARCH_SCREEN_CELL_IDENTIFIER, for: indexPath) as! SearchScreenTableViewCell
         cell.addBorderLayerAndCornerRadius()
-        cell.configureUI(movie: filteredArray[indexPath.section], searchText: self.searchText)
+        if  isSearching || movies.isEmpty {
+            cell.configureUI(movie: filteredArray[indexPath.section], searchText: self.searchText)
+        } else {
+            let name = self.movies[indexPath.section]
+            cell.configureUI(movie:  name.movieName?.first ?? "", searchText: self.searchText)
+        }
+      
         return cell
     }
 
@@ -61,11 +137,26 @@ extension SearchScreenViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedMovies.append(filteredArray[indexPath.section])
-        self.presentAlertViewController(msg: CACHED)
+        // create a movie object
+        let cachedMovie = Movie(context: self.context)
+        cachedMovie.movieName = selectedMovies
+        // save to core data
+        if selectedMovies.count <= 5 {
+            cacheMoviesToCoreData(movieName: filteredArray[indexPath.section])
+            self.presentAlertViewController(msg: CACHED)
+        } else {
+            self.presentAlertViewController(msg: CACHING_ERROR)
+        }
     }
 }
 
 extension SearchScreenViewController : UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        isSearching = true
+        searchBar.showsCancelButton = true
+        return true
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredArray = searchText.isEmpty ? movieNameArray : movieNameArray.filter({(movie: String) -> Bool in
             let movieSubparts = movie.components(separatedBy: " ")
@@ -83,4 +174,18 @@ extension SearchScreenViewController : UISearchBarDelegate {
         print(filteredArray)
         self.searchTableView.reloadData()
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        isSearching = false
+        self.searchTableView.reloadData()
+    }
 }
+
+
+
+
+
+
+
+

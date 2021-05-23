@@ -13,6 +13,7 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var searchBarTextField: UISearchBar!
     @IBOutlet weak var movieListTableView: UITableView!
     
+    // MARK: Variables declearations
     var movieList : [MovieListResponse]? {
         didSet {
             guard let movieLists = self.movieList, !movieLists.isEmpty else {
@@ -39,19 +40,19 @@ class MovieListViewController: UIViewController {
     }
     
     func showEmptyState(){
-        
+        // TODO
     }
     
     func hideEmptyState(){
-        
+        // TODO
     }
     
     func getMovieList(){
-        // show loader
+        //1 show loader
         let parameters: [String: String] = [:]
         let request = RequestModel(url: .movieList, httpBody: parameters, pathParam: "")
         NetworkManager.request(request, MovieListResponse.self) { result in
-            // dismiss loader
+            //2 dismiss loader
             switch result {
             case .success(let list):
                 self.movieList = [list]
@@ -63,21 +64,28 @@ class MovieListViewController: UIViewController {
         }
     }
     
-    // navigation
+    //MARK: Navigation methods
     func pushMovieDetailScreenVC(id: Int){
+        // 1
         let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
+        // 2
         let vc = storyboard.instantiateViewController(identifier: MOVIE_DETAIL_VIEWCONTROLLER) as! MovieDetailViewController
+        // 3 pass data
         vc.movieId = id
+        // 4 push through navigation controller
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    //
+    
     func presentSearchScreenVC(){
+        // 1
         let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
+        // 2
         let vc = storyboard.instantiateViewController(identifier: SEARCH_SCREEN_VIEWCONTROLLER) as! SearchScreenViewController
+        // 3 pass data
         let movieName = self.movieList?.first?.results?.compactMap{$0.original_title}
         vc.movieNameArray =  movieName ?? [""]
-//        vc.modalPresentationStyle = .fullScreen
+        // 5
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -86,12 +94,11 @@ class MovieListViewController: UIViewController {
 
 //MARK: SearchBar Delegate
 extension MovieListViewController : UISearchBarDelegate {
-    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.presentSearchScreenVC()
     }
-    
 }
+// end of extension
 
 // end of UISearchBarDelegate extension
 //MARK: UITableViewDataSource

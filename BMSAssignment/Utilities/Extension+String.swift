@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension String {
-
+    
     func highlightText(
         _ text: String,
         with color: UIColor,
@@ -29,3 +29,4 @@ extension String {
         return attrString
     }
 }
+// end of extension

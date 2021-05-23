@@ -41,10 +41,13 @@ class MovieListTableViewCell: UITableViewCell {
     }
     
     func showImageFromUrl(path : String, indexpath: Int){
+        //1
         self.movieImageView.layer.masksToBounds = true
+        // 2 set image url
         let imageString = IMAGE_BASE_URL + path
         let imageUrl = URL(string: imageString.replacingOccurrences(of: " ", with: "%20"))
         guard let url = imageUrl else { return }
+        // 3 assign sdwebimage
         movieImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
     }
 }

@@ -33,9 +33,9 @@ struct MovieSynopsisResponse : Codable {
     let video : Bool?
     let vote_average : Double?
     let vote_count : Int?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case adult = "adult"
         case backdrop_path = "backdrop_path"
         case belongs_to_collection = "belongs_to_collection"
@@ -62,7 +62,7 @@ struct MovieSynopsisResponse : Codable {
         case vote_average = "vote_average"
         case vote_count = "vote_count"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adult = try values.decodeIfPresent(Bool.self, forKey: .adult)
@@ -91,25 +91,25 @@ struct MovieSynopsisResponse : Codable {
         vote_average = try values.decodeIfPresent(Double.self, forKey: .vote_average)
         vote_count = try values.decodeIfPresent(Int.self, forKey: .vote_count)
     }
-
+    
 }
 
 struct Genres : Codable {
     let id : Int?
     let name : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case id = "id"
         case name = "name"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         name = try values.decodeIfPresent(String.self, forKey: .name)
     }
-
+    
 }
 
 struct Production_companies : Codable {
@@ -117,15 +117,15 @@ struct Production_companies : Codable {
     let logo_path : String?
     let name : String?
     let origin_country : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case id = "id"
         case logo_path = "logo_path"
         case name = "name"
         case origin_country = "origin_country"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
@@ -133,44 +133,44 @@ struct Production_companies : Codable {
         name = try values.decodeIfPresent(String.self, forKey: .name)
         origin_country = try values.decodeIfPresent(String.self, forKey: .origin_country)
     }
-
+    
 }
 
 struct Production_countries : Codable {
     let iso_3166_1 : String?
     let name : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case iso_3166_1 = "iso_3166_1"
         case name = "name"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         iso_3166_1 = try values.decodeIfPresent(String.self, forKey: .iso_3166_1)
         name = try values.decodeIfPresent(String.self, forKey: .name)
     }
-
+    
 }
 
 struct Spoken_languages : Codable {
     let english_name : String?
     let iso_639_1 : String?
     let name : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case english_name = "english_name"
         case iso_639_1 = "iso_639_1"
         case name = "name"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         english_name = try values.decodeIfPresent(String.self, forKey: .english_name)
         iso_639_1 = try values.decodeIfPresent(String.self, forKey: .iso_639_1)
         name = try values.decodeIfPresent(String.self, forKey: .name)
     }
-
+    
 }

@@ -9,7 +9,7 @@ import Foundation
 import SystemConfiguration
 
 public class NetworkConnectivity {
-
+    
     public static func isConnectedToNetwork() -> Bool {
         // 1
         var zeroAddress = sockaddr_in()
@@ -19,11 +19,11 @@ public class NetworkConnectivity {
         guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
             // 3
             $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
-
+                
                 SCNetworkReachabilityCreateWithAddress(nil, $0)
-
+                
             }
-
+            
         }) else {
             // 4
             return false
@@ -40,5 +40,5 @@ public class NetworkConnectivity {
         // 8
         return (isReachable && !needsConnection)
     }
-
+    
 }

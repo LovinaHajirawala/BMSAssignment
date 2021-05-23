@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 extension UIImageView {
+    // alternate to SDWebimage
     func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -23,7 +24,7 @@ extension UIImageView {
             }
         }.resume()
     }
-    
+
     func downloaded(from link: String, contentMode mode: ContentMode = .scaleToFill) {
         let imageString = IMAGE_BASE_URL + link
         let imageUrl = URL(string: imageString.replacingOccurrences(of: " ", with: "%20"))

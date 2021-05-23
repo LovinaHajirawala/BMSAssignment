@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-   
+    
     func presentViewController(vcIdentifier: String){
         let storyboard = UIStoryboard(name: MAIN_STORYBOARD, bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: vcIdentifier)
@@ -20,13 +20,13 @@ extension UIViewController {
         let alert = UIAlertController(title: BMS_TITLE, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
-                case .default:
+            case .default:
                 print("default")
                 
-                case .cancel:
+            case .cancel:
                 print("cancel")
                 
-                case .destructive:
+            case .destructive:
                 print("destructive")
                 
             @unknown default:

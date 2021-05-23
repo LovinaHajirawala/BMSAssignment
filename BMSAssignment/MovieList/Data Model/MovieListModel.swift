@@ -13,16 +13,16 @@ struct MovieListResponse : Codable {
     let results : [Results]?
     let total_pages : Int?
     let total_results : Int?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case dates = "dates"
         case page = "page"
         case results = "results"
         case total_pages = "total_pages"
         case total_results = "total_results"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         dates = try values.decodeIfPresent(Dates.self, forKey: .dates)
@@ -31,25 +31,25 @@ struct MovieListResponse : Codable {
         total_pages = try values.decodeIfPresent(Int.self, forKey: .total_pages)
         total_results = try values.decodeIfPresent(Int.self, forKey: .total_results)
     }
-
+    
 }
 
 struct Dates : Codable {
     let maximum : String?
     let minimum : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case maximum = "maximum"
         case minimum = "minimum"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         maximum = try values.decodeIfPresent(String.self, forKey: .maximum)
         minimum = try values.decodeIfPresent(String.self, forKey: .minimum)
     }
-
+    
 }
 
 struct Results : Codable {
@@ -67,9 +67,9 @@ struct Results : Codable {
     let video : Bool?
     let vote_average : Double?
     let vote_count : Int?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case adult = "adult"
         case backdrop_path = "backdrop_path"
         case genre_ids = "genre_ids"
@@ -85,7 +85,7 @@ struct Results : Codable {
         case vote_average = "vote_average"
         case vote_count = "vote_count"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adult = try values.decodeIfPresent(Bool.self, forKey: .adult)
@@ -103,5 +103,5 @@ struct Results : Codable {
         vote_average = try values.decodeIfPresent(Double.self, forKey: .vote_average)
         vote_count = try values.decodeIfPresent(Int.self, forKey: .vote_count)
     }
-
+    
 }

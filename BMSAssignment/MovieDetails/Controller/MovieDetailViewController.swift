@@ -10,7 +10,7 @@ import SDWebImage
 
 
 class MovieDetailViewController: UIViewController {
-
+    
     @IBOutlet weak var bookButton: UIButton!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
@@ -20,11 +20,13 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
     
+    // MARK: Variables declearations
     var movieId: Int!
     var movieSynopsis : MovieSynopsisResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 1 API Call
         getMovieSynopsis()
         // TODO: On click on homepage take to SFSafariVC
     }
@@ -35,18 +37,24 @@ class MovieDetailViewController: UIViewController {
     
     //MARK:- API Call
     func getMovieSynopsis(){
+        // TODO: start loader
+        // 1 Set Parameters
         let parameters: [String: Int] = [:]
+        // 2 Set Request
         let request = RequestModel(url: .movieSynopsis, httpBody: parameters, pathParam: "\(movieId ?? 0)")
+        // 3  API Call
         NetworkManager.request(request, MovieSynopsisResponse.self) { result in
+            // TODO: dismiss loader
             switch result {
             case .success(let list):
-                // assign data to datasource
+                //4 assign data to datasource
                 self.movieSynopsis = list
-                // set UI
+                // 5 set UI
                 DispatchQueue.main.async {
                     self.configureUI()
                 }
             case .failure(let err):
+                // 6 Error Handling
                 self.presentAlertViewController(msg: err.localizedDescription)
             }
         }

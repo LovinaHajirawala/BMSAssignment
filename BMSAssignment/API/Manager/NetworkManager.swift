@@ -11,8 +11,8 @@ import Foundation
 class NetworkManager {
     
     static func requestData<T:Codable, U: Codable>(_ requestModel:RequestModel<U>,
-                                        _ modelType: T.Type,
-                                        completion: @escaping (Result<T,APIError>) -> Void) {
+                                                   _ modelType: T.Type,
+                                                   completion: @escaping (Result<T,APIError>) -> Void) {
         // 1
         let isConnected = NetworkConnectivity.isConnectedToNetwork
         // 2
@@ -28,7 +28,7 @@ class NetworkManager {
         httpRequest(urlRequest, T.self) { (response) in
             // 6
             switch response{
-                
+            
             case .success(let data):
                 
                 completion(.success(data))
@@ -41,8 +41,8 @@ class NetworkManager {
     }
     
     static func request<T:Codable, U: Codable>(_ requestModel:RequestModel<U>,
-                                        _ modelType: T.Type,
-                                        completion: @escaping (Result<T,APIError>) -> Void) {
+                                               _ modelType: T.Type,
+                                               completion: @escaping (Result<T,APIError>) -> Void) {
         // 1
         let isConnected = NetworkConnectivity.isConnectedToNetwork
         // 2
@@ -63,7 +63,7 @@ class NetworkManager {
         httpRequest(urlRequest, T.self) { (response) in
             // 8
             switch response{
-                
+            
             case .success(let wrapper):
                 // 9
                 completion(.success(wrapper))
@@ -82,8 +82,8 @@ class NetworkManager {
     
     
     fileprivate static func httpRequest<T:Codable>(_ urlRequest: URLRequest,
-                                                      _ responseType: T.Type,
-                                                      completion: @escaping (Result<T,APIError>) -> Void) {
+                                                   _ responseType: T.Type,
+                                                   completion: @escaping (Result<T,APIError>) -> Void) {
         
         // 1
         let sessionConfig = URLSessionConfiguration.default
@@ -111,40 +111,39 @@ class NetworkManager {
             
             // 6
             switch httpResponse.statusCode {
-                // 7
+            // 7
             case 200:
                 do {
                     let wrapper = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(wrapper))
-            } catch DecodingError.dataCorrupted(let context) {
-                print(context)
-            } catch DecodingError.keyNotFound(let key, let context) {
-                print("Key '\(key)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(.failure(.jsonConversionFailure))
-            } catch DecodingError.valueNotFound(let value, let context) {
-                print("Value '\(value)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(.failure(.jsonConversionFailure))
-            } catch DecodingError.typeMismatch(let type, let context) {
-                print("Type '\(type)' mismatch:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-                completion(.failure(.jsonConversionFailure))
-            } catch {
-                print("error: ", error)
-                completion(.failure(.jsonConversionFailure))
-            }
+                } catch DecodingError.dataCorrupted(let context) {
+                    print(context)
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                    completion(.failure(.jsonConversionFailure))
+                } catch DecodingError.valueNotFound(let value, let context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                    completion(.failure(.jsonConversionFailure))
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                    completion(.failure(.jsonConversionFailure))
+                } catch {
+                    print("error: ", error)
+                    completion(.failure(.jsonConversionFailure))
+                }
             case 401:
                 completion(.failure(APIError.unauthorized))
                 
             default:
                 completion(.failure(.internalServerError))
             }
-                                   
+            
         }.resume()
         
     }
-    
     
     
     // MARK:- GET URL REQUEST
@@ -159,7 +158,7 @@ class NetworkManager {
         if  !requestData.pathParam.isEmpty {
             url?.appendPathComponent(requestData.pathParam)
         }
-       
+        
         url?.appendQueryItem(name: "api_key", value: API_KEY)
         // 5
         urlRequest = URLRequest(url: url!)

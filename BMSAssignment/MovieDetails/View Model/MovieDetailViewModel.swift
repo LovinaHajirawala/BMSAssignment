@@ -30,7 +30,7 @@ class MovieDetailViewModel {
         // 1 Set Parameters
         let parameters: [String: Int] = [:]
         // 2 Set Request
-        let request = RequestModel(url: .movieSynopsis, httpBody: parameters, pathParam: "\(movieId ?? 0)")
+        let request = RequestModel(url: .movieSynopsis, httpBody: parameters, pathParam: "\(movieId ?? 0)", requestType: .GET)
         // 3  API Call
         NetworkManager.request(request) { (result: Result<MovieSynopsisResponse, APIError>) in
             // TODO: dismiss loader

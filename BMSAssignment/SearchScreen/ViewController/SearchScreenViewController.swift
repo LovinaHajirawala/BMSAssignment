@@ -31,6 +31,7 @@ class SearchScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.searchBarTextField.tintColor = .red
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     func fetchCoreDataObjectsFromModel(){

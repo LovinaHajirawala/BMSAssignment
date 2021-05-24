@@ -34,7 +34,7 @@ class MovieListViewModel {
         //1 show loader
         // 2 set request and param
         let parameters: [String: String] = [:]
-        let request = RequestModel(url: .movieList, httpBody: parameters, pathParam: "")
+        let request = RequestModel(url: .movieList, httpBody: parameters, pathParam: "", requestType: .GET)
         //3 make a request to NetworkManager
         NetworkManager.request(request) { (result: Result<MovieListResponse, APIError>) in
             //4 dismiss loader

@@ -40,15 +40,16 @@ enum HTTPHeaderField: String {
 
 struct RequestModel<T: Codable>  {
     let url : EndPoint
-    let typeObj : RequestType = .GET
+    var typeObj : RequestType = .GET
     var querryItems : [URLQueryItem]?
     var httpBody : T?
     let pathParam : String
     
-    init(url: EndPoint, httpBody: T, pathParam: String){
+    init(url: EndPoint, httpBody: T, pathParam: String, requestType: RequestType){
         self.url = url
         self.httpBody = httpBody
         self.pathParam = pathParam
+        self.typeObj = requestType
     }
 }
 

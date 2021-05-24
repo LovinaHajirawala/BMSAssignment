@@ -9,3 +9,4 @@ import Foundation
 
 let BMS_TITLE = "Book My Show"
 let MOVIE_LIST_SCREEN_CELL_IDENTIFIER = "MovieListScreenTableViewCell"
+let BACK = "Back"

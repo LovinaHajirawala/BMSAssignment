@@ -67,10 +67,6 @@ class MovieDetailViewController: UIViewController {
     }
     
     //MARK: IBActions
-    @IBAction func backButtonClicked(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     @IBAction func bookButtonClicked(_ sender: Any) {
         self.presentAlertViewController(msg: "View list of all theatres screening this.")
     }

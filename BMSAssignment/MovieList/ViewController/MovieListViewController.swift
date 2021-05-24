@@ -26,6 +26,8 @@ class MovieListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.searchBarTextField.tintColor = .clear
+        searchBarTextField.delegate = self
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     func setMovieModel(){
@@ -47,9 +49,11 @@ class MovieListViewController: UIViewController {
         // 3 pass data
         vc.movieId = id
         // 4 push through navigation controller
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: BACK, style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem?.tintColor = .red
+        self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     
     func presentSearchScreenVC(){
         // 1
@@ -59,8 +63,10 @@ class MovieListViewController: UIViewController {
         // 3 pass data
         let movieName = self.viewModel.movieList?.first?.results?.compactMap{$0.original_title}
         vc.movieNameArray =  movieName ?? [""]
-        // 5
-        self.present(vc, animated: true, completion: nil)
+        // 6
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: BACK, style: .plain, target: self, action: nil)
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.present(vc, animated: false, completion: nil)
     }
     
 }
@@ -68,8 +74,9 @@ class MovieListViewController: UIViewController {
 
 //MARK: SearchBar Delegate
 extension MovieListViewController : UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         self.presentSearchScreenVC()
+        return false
     }
 }
 // end of UISearchBarDelegate extension
